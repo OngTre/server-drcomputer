@@ -1,5 +1,5 @@
 # Step 1: Build Stage
-FROM maven:3.9.1-openjdk-22 AS build
+FROM maven:3.8-openjdk-11 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -11,13 +11,13 @@ COPY pom.xml .
 RUN mvn dependency:go-offline
 
 # Copy the entire application source code
-COPY DoAn/src /app/src
+COPY /src /app/src
 
 # Build the application (skip tests for faster builds)
 RUN mvn clean package -DskipTests
 
 # Step 2: Run Stage
-FROM openjdk:22-jdk-slim
+FROM openjdk:11-jdk-slim
 
 # Set the working directory
 WORKDIR /app
