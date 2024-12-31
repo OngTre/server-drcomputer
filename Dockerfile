@@ -1,32 +1,12 @@
 # Step 1: Build Stage
-FROM maven:3.8-openjdk-11 AS build
-
-# Set the working directory
+FROM maven:3-openjdk-22 AS build
 WORKDIR /app
-
-# Copy the pom.xml and dependencies first (to leverage Docker caching)
-COPY DoAn/pom.xml .
-
-# Download dependencies to cache them (so we don’t re-download them every time)
-RUN mvn dependency:go-offline
-
-# Copy the entire application source code
-COPY DoAn/src /app/src
-
-# Build the application (skip tests for faster builds)
+COPY . .
 RUN mvn clean package -DskipTests
 
 # Step 2: Run Stage
-FROM openjdk:11-jdk-slim
-
-# Set the working directory
+FROM openjdk:22-jdk-slim
 WORKDIR /app
-
-# Copy the built JAR file from the build stage
-COPY --from=build /app/target/DoAn-0.0.1-SNAPSHOT.jar /app/app.jar
-
-# Expose the port that Spring Boot runs on (default is 8080)
+COPY --from=build /app/target/DoAn-0.0.1-SNAPSHOT.war doan.war
 EXPOSE 8080
-
-# Command to run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "doan.war"]
