@@ -66,8 +66,15 @@ public class JWTUtils {
 
 
 
-    public  boolean isTokenExpired(String token){
-        return extractClaims(token, Claims::getExpiration).before(new Date());
+    public boolean isTokenExpired(String token) {
+    Date expiration = extractClaims(token, Claims::getExpiration);
+    long currentTimeMillis = System.currentTimeMillis();
+
+    // Độ lệch múi giờ (90 phút cho phép)
+    long allowedSkewMillis = 90 * 60 * 1000;  // 90 phút * 60 giây * 1000 ms
+
+    // Kiểm tra nếu thời gian hết hạn token đã vượt quá thời gian hiện tại, cộng với khoảng lệch đồng hồ cho phép
+    return expiration.getTime() + allowedSkewMillis < currentTimeMillis;
     }
 
     public  boolean isTokenValid(String token, UserDetails userDetails){
