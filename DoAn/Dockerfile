@@ -5,13 +5,13 @@ FROM maven:3.8-openjdk-11 AS build
 WORKDIR /app
 
 # Copy the pom.xml and dependencies first (to leverage Docker caching)
-COPY pom.xml .
+COPY DoAn/pom.xml .
 
 # Download dependencies to cache them (so we don’t re-download them every time)
 RUN mvn dependency:go-offline
 
 # Copy the entire application source code
-COPY /src /app/src
+COPY DoAn/src /app/src
 
 # Build the application (skip tests for faster builds)
 RUN mvn clean package -DskipTests
