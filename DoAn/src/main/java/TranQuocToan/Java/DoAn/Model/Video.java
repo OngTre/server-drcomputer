@@ -25,4 +25,8 @@ public class Video {
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference // Chỉ serialize danh sách này
     private List<Transcription> transcriptions = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference // Serialize danh sách comment
+//    private List<Comment> comments = new ArrayList<>();
 }

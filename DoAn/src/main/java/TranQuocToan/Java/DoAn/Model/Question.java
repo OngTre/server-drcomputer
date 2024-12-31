@@ -14,23 +14,37 @@ import java.util.List;
 
 @Entity
 public class Question {
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private Long id;
+ @NotBlank(message = "")
+ private String question;
+ @NotBlank
+ private String subject = "Default Subject";
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
-    @NotBlank(message = "")
-    private String question;
-    @NotBlank
-    private String subject;
+ @NotBlank
+ private String questionType = "single";
+ @ElementCollection
+ private List<String> choices;
+ @ElementCollection
+ private List<String> correctAnswers;
 
-    @NotBlank
-    private String questionType;
+ public String getQuestionText() {
+  return question;
+ }
 
-    @ElementCollection
-    private List<String> choices;
+ public void setQuestionText(String question) {
+  this.question = question;
+ }
 
-    @ElementCollection
-    private List<String> correctAnswers;
+ // Getter và Setter cho 'choices'
+ public List<String> getChoices() {
+  return choices;
+ }
 
-    
+ public void setChoices(List<String> choices) {
+  this.choices = choices;
+ }
+
+
 }
