@@ -20,7 +20,7 @@ import java.security.SecureRandom;
 public class JWTUtils {
 
     private SecretKey Key;
-    private static  long EXPIRATION_TIME = 864000;  //24hours
+    private static  long EXPIRATION_TIME = 432000000;  //24hours
 
     public JWTUtils() {
 
