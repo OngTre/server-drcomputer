@@ -27,6 +27,13 @@ public class JWTAuthFilter extends OncePerRequestFilter {
     @Autowired
     private OurUserDetailsService ourUserDetailsService;
 
+     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        // Bỏ qua filter cho các endpoint auth
+        return path.startsWith("/api/quizzes/auth/");
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
