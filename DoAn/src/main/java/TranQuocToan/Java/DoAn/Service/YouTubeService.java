@@ -84,7 +84,6 @@ public class YouTubeService {
                     
                 // Define the API request for retrieving search results.
                 YouTube.Search.List search = youtube.search().list("id,snippet");
-                String apiKey = System.getenv(YOUTUBE_APIKEY);
 
                 // Set your developer key from the {{ Google Cloud Console }} for
                 // non-authenticated requests. See:
