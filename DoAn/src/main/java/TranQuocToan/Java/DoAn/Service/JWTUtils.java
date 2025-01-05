@@ -22,7 +22,7 @@ public class JWTUtils {
 
     private SecretKey Key;
     private static  long EXPIRATION_TIME = 864000;  //24hours
-
+    private static final long REFRESH_EXPIRATION_TIME = 604800000;
     public JWTUtils() {
 
 
@@ -48,7 +48,7 @@ public class JWTUtils {
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + REFRESH_EXPIRATION_TIME))
                 .signWith(Key)
                 .compact();
     }
