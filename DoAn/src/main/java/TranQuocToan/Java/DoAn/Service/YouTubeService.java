@@ -43,7 +43,7 @@ public class YouTubeService {
     private static final String YOUTUBE_SEARCH_TYPE     = "video";
     private static final String YOUTUBE_SEARCH_FIELDS   = "items(id/kind,id/videoId,snippet/title,snippet/description,snippet/thumbnails/default/url)";
     private static final String YOUTUBE_API_APPLICATION = "google-youtube-api-search";
-    private static final String YOUTUBE_APIKEY_ENV      = "AIzaSyBXR310Fswc_ZPxvSqNGgk8GluN0TS0eiw";
+    private static final String YOUTUBE_APIKEY_ENV      = "YOUTUBE_APIKEY"; 
 
     private static final long NUMBER_OF_VIDEOS_RETURNED  = 25;
 
@@ -81,9 +81,10 @@ public class YouTubeService {
         try {
 
             if (youtube != null) {
-
+                    
                 // Define the API request for retrieving search results.
                 YouTube.Search.List search = youtube.search().list("id,snippet");
+                String apiKey = System.getenv(YOUTUBE_APIKEY);
 
                 // Set your developer key from the {{ Google Cloud Console }} for
                 // non-authenticated requests. See:
@@ -93,6 +94,10 @@ public class YouTubeService {
 
                 if ( apiKey == null ) {
                     apiKey = propertiesBundle.getString("youtube.apikey");
+                }
+                 if (apiKey == null || apiKey.isEmpty()) {
+                    log.error("API Key is not set!");
+                    return rvalue;
                 }
 
                 search.setKey(apiKey);
