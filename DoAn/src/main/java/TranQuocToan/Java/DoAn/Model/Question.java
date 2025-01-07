@@ -2,51 +2,48 @@ package TranQuocToan.Java.DoAn.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "questions")
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Question text cannot be blank")
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @NotBlank(message = "Question cannot be blank")
     private String question;
 
-    @NotBlank(message = "Subject cannot be blank")
-    @Column(nullable = false)
+    @NotBlank
     private String subject = "Default Subject";
 
-    @NotBlank(message = "Question type cannot be blank")
-    @Column(nullable = false)
+    @NotBlank
     private String questionType = "single";
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    // Định nghĩa bảng phụ cho các lựa chọn
+    @ElementCollection
     @CollectionTable(
         name = "question_choices",
-        joinColumns = @JoinColumn(name = "question_id", nullable = false),
-        foreignKey = @ForeignKey(name = "fk_question_choices")
+        joinColumns = @JoinColumn(name = "question_id")
     )
-    @Column(name = "choice", nullable = false, columnDefinition = "TEXT")
-    @Size(min = 2, message = "At least 2 choices are required")
-    private List<String> choices = new ArrayList<>();
+    @Column(name = "choice", nullable = false)
+    private List<String> choices;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    // Định nghĩa bảng phụ cho các câu trả lời đúng
+    @ElementCollection
     @CollectionTable(
         name = "question_correct_answers",
-        joinColumns = @JoinColumn(name = "question_id", nullable = false),
-        foreignKey = @ForeignKey(name = "fk_question_correct_answers")
+        joinColumns = @JoinColumn(name = "question_id")
     )
-    @Column(name = "correct_answer", nullable = false, columnDefinition = "TEXT")
-    @Size(min = 1, message = "At least 1 correct answer is required")
-    private List<String> correctAnswers = new ArrayList<>();
+    @Column(name = "correct_answer", nullable = false)
+    private List<String> correctAnswers;
+
+    // Thêm các getter và setter khác nếu cần
 }
+
 // package TranQuocToan.Java.DoAn.Model;
 
 // import jakarta.persistence.*;
@@ -75,7 +72,7 @@ public class Question {
 //     private String subject = "Default Subject";
 
 //     @NotBlank
-//     private String questionType = "single";
+//     private String questionType = "single";a
 
 //     // Định nghĩa bảng phụ cho các lựa chọn
 //     @ElementCollection
