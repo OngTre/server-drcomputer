@@ -2,10 +2,14 @@ package TranQuocToan.Java.DoAn.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.List;
 
+@Getter
+@Setter
 @Data
 @Entity
 public class Question {
@@ -42,6 +46,31 @@ public class Question {
     private List<String> correctAnswers;
 
     // Thêm các getter và setter khác nếu cần
+    public String getQuestionText() {
+        return question;
+    }
+
+    public void setQuestionText(String question) {
+        this.question = question;
+    }
+
+    // Getter và Setter cho 'subject'
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    // Getter và Setter cho 'questionType'
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
+    }
 }
 
 // package TranQuocToan.Java.DoAn.Model;
